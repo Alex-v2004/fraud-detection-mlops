@@ -10,3 +10,5 @@ mlruns/
 data/
 *.csv
 .DS_Store
+src/data/*.csv
+data/
