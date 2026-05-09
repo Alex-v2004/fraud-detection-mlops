@@ -30,10 +30,10 @@ jobs:
           import pickle, pathlib
           from sklearn.dummy import DummyClassifier
           import numpy as np
-          
-          model = DummyClassifier(strategy='constant', constant=0)
-          model.fit(np.zeros((10, 30)), [0]*10)
-          
+
+          model = DummyClassifier(strategy='prior')
+          model.fit(np.zeros((10, 30)), [0,0,0,0,0,0,0,0,0,1])
+
           pathlib.Path('models').mkdir(exist_ok=True)
           with open('models/fraud_model.pkl', 'wb') as f:
               pickle.dump(model, f)
