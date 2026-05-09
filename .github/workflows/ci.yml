@@ -24,9 +24,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Train model for testing
+      - name: Create mock model for testing
         run: |
-          PYTHONPATH=. python src/model/train.py
+          python -c "
+          import pickle, pathlib
+          from sklearn.dummy import DummyClassifier
+          import numpy as np
+          
+          model = DummyClassifier(strategy='constant', constant=0)
+          model.fit(np.zeros((10, 30)), [0]*10)
+          
+          pathlib.Path('models').mkdir(exist_ok=True)
+          with open('models/fraud_model.pkl', 'wb') as f:
+              pickle.dump(model, f)
+          print('Mock model created!')
+          "
 
       - name: Run pytest
         run: |
